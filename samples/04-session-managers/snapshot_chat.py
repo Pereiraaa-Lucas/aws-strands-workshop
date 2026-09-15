@@ -1,19 +1,21 @@
-"""Interactive multi-turn chat for Module 4: Session Managers.
+"""Snapshot-based persistent chat for Module 4: Session Managers.
 
-The notebook runs the agent one prompt at a time (each cell is one turn). This
-script wraps the same agent - backed by FileSessionManager - in a loop so you
-can hold a real multi-turn conversation in the terminal.
+This is the recommended approach for new single-agent sessions. Instead of
+writing individual message records (as FileSessionManager does), the
+SnapshotSessionManager persists the entire agent as a single atomic JSON blob
+on each save. It is simpler, faster, and supports immutable checkpoints you
+can restore to.
 
-Because the session is persisted to disk, this is also the persistence demo:
-quit the script, run it again with the same --session-id, and the agent
-remembers the earlier conversation.
+Like chat.py, this wraps the agent in a terminal loop so you can hold a real
+multi-turn conversation. Because the snapshot is persisted to disk, quitting
+and re-running with the same --session-id restores the earlier conversation.
 
 From the cloned repo root:
 
     cd samples/04-session-managers
     pip install -r requirements.txt
-    python chat.py                       # uses the default session id
-    python chat.py --session-id alice    # resume/keep a named session
+    python snapshot_chat.py                    # uses the default session id
+    python snapshot_chat.py --session-id alice # resume/keep a named session
 
 Type 'quit', 'exit', or press Ctrl+C to stop.
 """
@@ -22,7 +24,8 @@ import argparse
 
 from strands import Agent, AgentSkills
 from strands.models import BedrockModel
-from strands.session.file_session_manager import FileSessionManager
+from strands.session import SnapshotSessionManager
+from strands.storage import LocalFileStorage
 
 # AWS-sponsored events / AWS credits: credits only cover Amazon Nova models, not Claude.
 # To switch, pass model=BedrockModel(model_id="...") to Agent(...).
@@ -48,7 +51,7 @@ to continue helping the customer without asking them to repeat information."""
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Multi-turn chat with a persistent agent.")
+    parser = argparse.ArgumentParser(description="Multi-turn chat with a snapshot-persisted agent.")
     parser.add_argument(
         "--session-id",
         default="customer-session-001",
@@ -56,12 +59,13 @@ def main():
     )
     args = parser.parse_args()
 
-    # FileSessionManager persists conversation state to ./sessions. Reusing the
-    # same session_id across runs restores the prior conversation, so memory
-    # survives both turns and full restarts.
-    session_manager = FileSessionManager(
+    # SnapshotSessionManager persists the whole agent as one atomic blob via the
+    # unified Storage backend. Use LocalFileStorage for dev; swap it for
+    # S3Storage (strands.storage.S3Storage) in production without other changes.
+    # Reusing the same session_id across runs restores the prior conversation.
+    session_manager = SnapshotSessionManager(
         session_id=args.session_id,
-        storage_dir="./sessions",
+        storage=LocalFileStorage("./sessions"),
     )
 
     agent = Agent(
@@ -75,7 +79,7 @@ def main():
     )
 
     restored = len(agent.messages)
-    print(f"Customer service agent (persistent session: {args.session_id}) - type 'quit' to exit.")
+    print(f"Customer service agent (snapshot session: {args.session_id}) - type 'quit' to exit.")
     if restored:
         print(f"Restored {restored} message(s) from a previous session.")
     print("Try: \"Hi, I'm customer C-1001. Can you look up my account?\"")

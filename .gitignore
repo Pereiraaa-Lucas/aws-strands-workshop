@@ -28,6 +28,8 @@ Thumbs.db
 
 # Session files written by FileSessionManager (Module 4 notebook + chat.py)
 sessions/
+# Snapshot session blobs written by SnapshotSessionManager (Module 4 notebook)
+snapshot_sessions/
 
 # AgentCore CLI scaffolding generated during Module 5 deploy (per-participant,
 # contains account IDs / deployed state - must never be committed)

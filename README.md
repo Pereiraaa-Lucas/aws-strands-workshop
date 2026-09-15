@@ -91,7 +91,7 @@ agentcore --version
 | Requirement | Detail |
 |-------------|--------|
 | Python | 3.10 or higher |
-| AWS credentials | Amazon Bedrock model access for Claude Sonnet 4 |
+| AWS credentials | Amazon Bedrock model access for Claude Sonnet 5 |
 | Deploy module (Module 5) | Node.js 20+, the `@aws/agentcore` CLI, `uv`, and AWS CDK; provisions an AgentCore Runtime + Amazon S3 staging via CloudFormation |
 
 ---
@@ -122,7 +122,7 @@ See [Module 1](./samples/01-agent-loop-tools/) for the full walkthrough and an i
 Work through Modules 1–5 in order — each builds on the previous one, ending with the agent deployed to AgentCore Runtime. Modules 6 (Multi-Agent) and 7 (Evals) are optional extensions on the same agent; take them in any order, or skip them.
 
 **Which Claude model does this use?**
-The modules default to Claude Sonnet 4 via Amazon Bedrock. You need Bedrock model access enabled in your AWS account.
+The modules default to Claude Sonnet 5 via Amazon Bedrock. You need Bedrock model access enabled in your AWS account.
 
 **Can I run this locally without AWS credentials, using Ollama?**
 Yes. Install [Ollama](https://ollama.com/download), pull a model that supports tool use, install the Strands Ollama extra, then pass `OllamaModel` to `Agent(...)`:

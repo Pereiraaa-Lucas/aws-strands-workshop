@@ -2,7 +2,6 @@ import json
 import logging
 import os
 from strands import Agent
-from strands.agent.conversation_manager import SlidingWindowConversationManager
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from customer_service_tools import lookup_customer, get_order_history, process_refund
 from steering_handlers import RefundWorkflowHandler, tone_handler
@@ -17,7 +16,7 @@ information and process requests.
 
 Important guidelines:
 - Always ask for the customer ID first if you don't have it.
-- Use tool data to answer questions — don't ask for info you already have.
+- Use tool data to answer questions, don't ask for info you already have.
 - Be warm but efficient."""
 
 _agent = None
@@ -29,7 +28,7 @@ def get_agent():
             tools=[lookup_customer, get_order_history, process_refund],
             plugins=[RefundWorkflowHandler(), tone_handler],
             system_prompt=SYSTEM_PROMPT,
-            conversation_manager=SlidingWindowConversationManager(window_size=20),
+            context_manager="auto",
         )
     return _agent
 
