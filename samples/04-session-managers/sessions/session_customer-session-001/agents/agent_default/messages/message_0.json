@@ -1,0 +1,15 @@
+{
+  "message": {
+    "role": "user",
+    "content": [
+      {
+        "text": "Hi, I'm customer C-1001. Can you look up my account?"
+      }
+    ],
+    "tracking_id": "b07e5be0-94ce-46af-a45d-ee5405c0a504"
+  },
+  "message_id": 0,
+  "redact_message": null,
+  "created_at": "2026-09-20T14:16:06.583802+00:00",
+  "updated_at": "2026-09-20T14:16:06.583808+00:00"
+}
