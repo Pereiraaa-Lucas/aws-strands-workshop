@@ -1,6 +1,3 @@
-Aqui tens o ficheiro README.md totalmente traduzido para português e pronto a ser aplicado no teu projeto.
-Se estiveres a editar diretamente no telemóvel pelo site do GitHub, basta abrires o ficheiro README.md, clicares no ícone do lápis para editar (Edit), substituíres todo o conteúdo por este bloco abaixo e gravares as alterações (Commit changes...):
-# Construa um Agente de IA de Produção: Workshop Prático de Strands Agents
 
 Construa um agente de IA de atendimento ao cliente pronto para produção do zero com o SDK [Strands Agents](https://strandsagents.com/latest/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) — o **SDK de infraestrutura de agentes** de código aberto — adicionando ferramentas, proteções (*guardrails*), memória, delegação multiagente, avaliações e implantação no [Amazon Bedrock AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) um módulo de cada vez.
 
